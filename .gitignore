@@ -129,4 +129,5 @@ dmypy.json
 .vscode
 mydata.json
 1.txt
+myrun.py
 
