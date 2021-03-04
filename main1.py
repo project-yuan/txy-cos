@@ -114,12 +114,14 @@ class My_txy:
         '''
         桶数据 = self.查询桶内()
         if type == 1:
-            for i in 桶数据.get('Contents'):
-                # print(i)
-                # print(i.get('Key'))
-                print(f'''文件名称{i.get('Key')}, 创建日期{i.get('LastModified')}, 大小约{int(i.get('Size')) // 1024}kb''')
+            if 桶数据.get('Contents'):
+                for i in 桶数据.get('Contents'):
+                    # print(i)
+                    # print(i.get('Key'))
+                    print(f'''文件名称{i.get('Key')}, 创建日期{i.get('LastModified')}, 大小约{int(i.get('Size')) // 1024}kb''')
+                return [i.get('Key') for i in 桶数据.get('Contents')]
+            print('桶中没有数据')
 
-            return [i.get('Key') for i in 桶数据.get('Contents')]
         if type == 2:
             return [i.get('Key') for i in 桶数据.get('Contents')]
     # 上传：
