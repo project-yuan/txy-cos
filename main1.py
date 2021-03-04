@@ -131,8 +131,8 @@ class My_txy:
         import win32ui
         dlg = win32ui.CreateFileDialog(1)
         dlg.SetOFNInitialDir('C:/1cly')
-        print(dlg.DoModal())   # 选择开始  选了就是1  没选就是2
-        if dlg.DoModal() == 2:
+        是否选择 = dlg.DoModal()   # 选择开始  选了就是1  没选就是2
+        if 是否选择 == 2:
             print('未选中文件')
             return None
         文件路径 = dlg.GetPathName()    # 获取路径
