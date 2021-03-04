@@ -25,7 +25,7 @@ class My_txy:
         self.config = config
         self.scheme = scheme
         self.region = region
-        self.bucket = 'py1-1253082658'
+        self.bucket = js1.get('tong')
         # 参照下文的描述。或者参照 Demo 程序，详见 https://github.com/tencentyun/cos-python-sdk-v5/blob/master/qcloud_cos/demo.py
 
 # d1 = {'Owner': {'ID': 'qcs::cam::uin/550191537:uin/550191537',
