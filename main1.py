@@ -80,6 +80,7 @@ class My_txy:
 
     # py1-1253082658
     def 查询桶内(self):
+        # TODO 我要删除数据，验证一下有没有这个东西
         response = self.client.list_objects(
             Bucket = self.bucket
             # Prefix='folder1'
@@ -105,6 +106,22 @@ class My_txy:
 
         return response
 
+    def 查询桶内2(self, type=1):
+        '''
+        type : 这个东西是查看运行模式，
+            如果是1，那就是单纯的查询桶内对象
+            如果是2，那就是吧桶内的对象变成列表返回['对象1','对象2']
+        '''
+        桶数据 = self.查询桶内()
+        if type == 1:
+            for i in 桶数据.get('Contents'):
+                # print(i)
+                # print(i.get('Key'))
+                print(f'''文件名称{i.get('Key')}, 创建日期{i.get('LastModified')}, 大小约{int(i.get('Size')) // 1024}kb''')
+
+            return [i.get('Key') for i in 桶数据.get('Contents')]
+        if type == 2:
+            return [i.get('Key') for i in 桶数据.get('Contents')]
     # 上传：
     # 根据文件大小自动选择简单上传或分块上传，分块上传具备断点续传功能。
 
@@ -143,18 +160,52 @@ class My_txy:
         print(response)
         print(response.get('Body'))
 
-    def 查询桶内2(self):
-        桶数据 = self.查询桶内()
-        for i in 桶数据.get('Contents'):
-            # print(i)
-            # print(i.get('Key'))
-            print(f'''文件名称{i.get('Key')}, 创建日期{i.get('LastModified')}, 大小约{int(i.get('Size')) // 1024}kb''')
 
+
+    def 删除桶内数据(self):
+
+        # 用户输入文件名，然后我去验证桶中是否有这个文件
+        while 1:
+            桶内数据 = self.查询桶内2(2)
+            删除文件是否对的上 = 1
+            print(f'桶内数据{桶内数据}')
+            输入_待删除的文件 = input('请输入你要删除的文件，可以使用中文逗号隔开\n:').strip('').rsplit('，')
+            for i in 输入_待删除的文件:
+                if i not in 桶内数据:
+                    print(f'{i} 文件不存在, 请重新输入')
+                    删除文件是否对的上 = 0
+            if 删除文件是否对的上:
+                break
+
+
+        需要删除的文件 = {'Object': []}
+        for i in 输入_待删除的文件:
+            需要删除的文件.get('Object').append({'Key': i})
+        print('将会删除', 需要删除的文件)
+        response = self.client.delete_objects(
+            Bucket = self.bucket,
+            Delete = 需要删除的文件
+            # Delete={
+            #     'Object': [
+            #         {
+            #             'Key': 要删除的文件1
+            #         },
+            #         {
+            #             'Key': 'exampleobject2'
+            #         }
+            #     ]
+            # }
+        )
+        return response
 
 if __name__ == '__main__':
     a1 = My_txy()
+    # a1.删除桶内数据()
     # a1.上传()
-    # a1.查询桶内2()
+    x1 = a1.查询桶内2()
+    # print(x1)
     # a1.下载()
     # a1.查询桶2()
+
+
 
