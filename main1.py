@@ -10,14 +10,14 @@ import json
 
 class My_txy:
 
-    def __init__(self, 地区='ap-chengdu'):
+    def __init__(self, token=None):
         with open('mydata.json', 'r', encoding='utf-8') as f:
             js1 = json.load(f)
         logging.basicConfig(level=logging.INFO, stream=sys.stdout)
         secret_id = js1.get('user_data').get('SecretId')  # 替换为用户的 secretId
         secret_key = js1.get('user_data').get('SecretKey')  # 替换为用户的 secretKey
-        region = 地区  # 替换为用户的 Region
-        token = None  # 使用临时密钥需要传入 Token，默认为空，可不填
+        region = js1.get('diqu')  # 替换为用户的 Region
+        token = js1.get('token')  # 使用临时密钥需要传入 Token，默认为空，可不填
         scheme = 'https'  # 指定使用 http/https 协议来访问 COS，默认为 https，可不填
         config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key, Token=token, Scheme=scheme)
         # 2. 获取客户端对象
