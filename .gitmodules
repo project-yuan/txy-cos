@@ -1,0 +1,2 @@
+[submodule "huanjing/qcloud-cos-sts-sdk"]
+	url = https://github.com/tencentyun/qcloud-cos-sts-sdk
