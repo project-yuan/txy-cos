@@ -122,3 +122,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+.idea/
+.history
+.vscode
+mydata.json
+1.txt
+
