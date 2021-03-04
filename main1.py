@@ -25,7 +25,7 @@ class My_txy:
         self.config = config
         self.scheme = scheme
         self.region = region
-        self.bucket = 'py1-1253082658'
+        self.bucket = js1.get('tong')
         # 参照下文的描述。或者参照 Demo 程序，详见 https://github.com/tencentyun/cos-python-sdk-v5/blob/master/qcloud_cos/demo.py
 
 # d1 = {'Owner': {'ID': 'qcs::cam::uin/550191537:uin/550191537',
@@ -114,12 +114,14 @@ class My_txy:
         '''
         桶数据 = self.查询桶内()
         if type == 1:
-            for i in 桶数据.get('Contents'):
-                # print(i)
-                # print(i.get('Key'))
-                print(f'''文件名称{i.get('Key')}, 创建日期{i.get('LastModified')}, 大小约{int(i.get('Size')) // 1024}kb''')
+            if 桶数据.get('Contents'):
+                for i in 桶数据.get('Contents'):
+                    # print(i)
+                    # print(i.get('Key'))
+                    print(f'''文件名称 {i.get('Key')}, 创建日期 {i.get('LastModified')}, 大小约 {int(i.get('Size')) // 1024}kb''')
+                return [i.get('Key') for i in 桶数据.get('Contents')]
+            print('桶中没有数据')
 
-            return [i.get('Key') for i in 桶数据.get('Contents')]
         if type == 2:
             return [i.get('Key') for i in 桶数据.get('Contents')]
     # 上传：
@@ -129,8 +131,8 @@ class My_txy:
         import win32ui
         dlg = win32ui.CreateFileDialog(1)
         dlg.SetOFNInitialDir('C:/1cly')
-        print(dlg.DoModal())   # 选择开始  选了就是1  没选就是2
-        if dlg.DoModal() == 2:
+        是否选择 = dlg.DoModal()   # 选择开始  选了就是1  没选就是2
+        if 是否选择 == 2:
             print('未选中文件')
             return None
         文件路径 = dlg.GetPathName()    # 获取路径
